@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公司电视展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #fullscreen-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* 保持比例，完整显示 */
+            /* 如果想要填充整个屏幕（可能裁剪图片），改为: object-fit: cover; */
+        }
+
+        /* 可选：添加加载动画 */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading" id="loading">加载中...</div>
+    <img id="fullscreen-image" src="image.jpg" alt="展示图片">
+
+    <script>
+        // 图片加载完成后隐藏加载提示
+        const img = document.getElementById('fullscreen-image');
+        const loading = document.getElementById('loading');
+
+        img.onload = function () {
+            loading.style.display = 'none';
+        };
+
+        // 每20分钟自动刷新整个网页
+        setInterval(() => {
+            location.reload();
+        }, 1200000); // 20分钟 = 20 × 60 × 1000 = 1200000毫秒
+
+        // 可选：按F11键切换全屏
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F11') {
+                e.preventDefault();
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
